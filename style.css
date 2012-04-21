@@ -1,0 +1,12 @@
+/*
+Theme Name: RotorWash
+Theme URI: https://github.com/copterlabs/rotorwash
+Description: Stripped down HTML5 theme with a number of utility functions
+Version: 1.0
+Author: Copter Labs
+Author URI: http://www.copterlabs.com
+Tags: blank, stripped, html5, extended, copter
+*/
+
+@import "assets/styles/base.css";
+@import "assets/styles/layout.css";
