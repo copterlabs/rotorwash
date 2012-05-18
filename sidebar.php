@@ -8,29 +8,15 @@
  */
 ?>
 
-        <aside>
-            <ul class="rotor-widgets sidebar">
-
-<?php
-
-// Provide some defaults in case there are no widgets active.
-if( !dynamic_sidebar('primary-widget-area') ):
-
-?>
-
-                <li>
-                    <?php get_search_form(); ?>
-
-                </li>
-
-                <li>
-                    <h3><?php _e( 'Archives', 'rotorwash' ); ?></h3>
-                    <ul>
-                        <?php wp_get_archives( 'type=monthly' ); ?>
-
-                    </ul>
-                </li>
-
-<?php endif; // end primary widget area ?>
+<aside id="sidebar">
+    <ul>
+<?php if( !dynamic_sidebar('primary-widget-area') ): ?>
+        <li>
+            <h3><?php _e( 'Archives', 'rotorwash' ); ?></h3>
+            <ul>
+                <?php wp_get_archives( 'type=monthly' ); ?>
             </ul>
-        </aside>
+        </li>
+<?php endif; // end primary widget area ?>
+    </ul>
+</aside>
