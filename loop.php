@@ -19,39 +19,35 @@
  */
 
 /* Display navigation to next/previous pages when applicable */
-if( $wp_query->max_num_pages > 1 )
-{
-    next_posts_link(__('&larr; Older posts', 'rotorwash'));
-    previous_posts_link(__('Newer posts &rarr;', 'rotorwash'));
-}
+if( $wp_query->max_num_pages > 1 ):
+
+?>
+        <div class="pagination">
+            <div class="next"><?php next_posts_link(__('&larr; Older posts', 'rotorwash')); ?></div>
+            <div class="prev"><?php previous_posts_link(__('Newer posts &rarr;', 'rotorwash')); ?></div>
+        </div>
+
+<?php
+
+endif;
 
 /* If there are no posts to display, such as an empty archive page */
 if( !have_posts() ):
 
 ?>
-        <h1><?php _e( 'Not Found', 'rotorwash' ); ?></h1>
+
+    <article class="post">
+        <h2><?php _e( 'Not Found', 'rotorwash' ); ?></h2>
         <p><?php _e( 'Apologies, but no results were found for the requested archive. Perhaps searching will help find a related post.', 'rotorwash' ); ?></p>
         <?php get_search_form(); ?>
+    </article>
 
 <?php
 
 endif;
 
 
-/* Start the Loop.
- *
- * In Twenty Ten we use the same loop in multiple contexts.
- * It is broken into three main parts: when we're displaying
- * posts that are in the gallery category, when we're displaying
- * posts in the asides category, and finally all other posts.
- *
- * Additionally, we sometimes check for whether we are on an
- * archive page, a search page, etc., allowing for small differences
- * in the loop on each template without actually duplicating
- * the rest of the loop that is shared.
- *
- * Without further ado, the loop:
- */
+/* Start the Loop */
 while( have_posts() ):
     the_post();
 
@@ -67,12 +63,15 @@ while( have_posts() ):
 
             <?php the_excerpt(); ?>
 
-            <ul class="post-meta">
-                <li><?php rw_posted_on(); ?></li>
-                <li><?php rw_posted_in(); ?></li>
-                <li><?php comments_popup_link(__('Leave a comment', 'rotorwash'), __('1 Comment', 'rotorwash'), __('% Comments', 'rotorwash')); ?></li>
-            </ul>
-            <?php edit_post_link(__('Edit', 'rotorwash'), '<p class="edit-link">', '</p>'); ?>
+            <? if (get_post_type() == 'post'): ?>
+
+                <ul class="post-meta">
+                    <li><?php rw_posted_on(); ?></li>
+                    <li><?php rw_posted_in(); ?></li>
+                    <li><?php comments_popup_link(__('Leave a comment', 'rotorwash'), __('1 Comment', 'rotorwash'), __('% Comments', 'rotorwash')); ?></li>
+                </ul>
+
+            <? endif; ?>
 
             <?php comments_template('', TRUE); ?>
 
@@ -83,8 +82,15 @@ while( have_posts() ):
 endwhile;
 
 /* Display navigation to next/previous pages when applicable */
-if( $wp_query->max_num_pages > 1 )
-{
-    next_posts_link(__('&larr; Older posts', 'rotorwash'));
-    previous_posts_link(__('Newer posts &rarr;', 'rotorwash'));
-}
+if( $wp_query->max_num_pages > 1 ):
+
+?>
+        <div class="pagination">
+            <div class="next"><?php next_posts_link(__('&larr; Older posts', 'rotorwash')); ?></div>
+            <div class="prev"><?php previous_posts_link(__('Newer posts &rarr;', 'rotorwash')); ?></div>
+        </div>
+
+<?php
+
+endif;
+
