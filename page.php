@@ -21,13 +21,9 @@ if( have_posts() ):
 ?>
 
             <article class="post">
-                <h2><?php the_title(); ?></h2>
+                <h2 class="page-title"><?php the_title(); ?></h2>
 
-<?php 
-
-the_content();
-
-?>
+                <?php the_content(); ?>
 
             </article><!-- end .post -->
 <?php 
@@ -37,3 +33,4 @@ endif;
 
 get_sidebar();
 get_footer();
+
