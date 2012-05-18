@@ -13,8 +13,10 @@ if( have_posts() ):
     while( have_posts() ):
         the_post();
 
-        previous_post_link('%link', _x('&larr;', 'Previous post link', 'rotorwash') . ' %title');
-        next_post_link('%link', '%title ' . _x('&rarr;', 'Next post link', 'rotorwash'));
+        echo "<div class='pagination'>";
+        next_post_link('<div class="next">%link</div>', '%title ' . _x('&rarr;', 'Next post link', 'rotorwash'));
+        previous_post_link('<div class="prev">%link</div>', _x('&larr;', 'Previous post link', 'rotorwash') . ' %title');
+        echo "</div>";
 
 ?>
 
@@ -28,12 +30,16 @@ wp_link_pages(array('before' => '<p class="post-pagination">' . __('Pages:', 'ro
 
 ?>
 
+            <? if (get_post_type() == 'post') { ?>
+
                 <ul class="post-meta">
                     <li><?php rw_posted_on(); ?></li>
                     <li><?php rw_posted_in(); ?></li>
                     <li><?php comments_popup_link(__('Leave a comment', 'rotorwash'), __('1 Comment', 'rotorwash'), __('% Comments', 'rotorwash')); ?></li>
                 </ul>
-                <?php edit_post_link(__('Edit', 'rotorwash'), '<p class="edit-link">', '</p>'); ?>
+           
+            <? } ?>
+
 
 <?php
 
@@ -49,9 +55,6 @@ wp_link_pages(array('before' => '<p class="post-pagination">' . __('Pages:', 'ro
 <?php
 
         endif;
-
-        previous_post_link('%link', _x('&larr;', 'Previous post link', 'rotorwash') . ' %title');
-        next_post_link('%link', '%title ' . _x('&rarr;', 'Next post link', 'rotorwash'));
 
 ?>
 
