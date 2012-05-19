@@ -1,5 +1,5 @@
 <div class="wrap">
-<h2>Settings for <?php echo get_current_theme(); ?></h2>
+<h2>Settings for <?php echo wp_get_theme(); ?></h2>
 
 <form method="post" action="options.php">
 <?php settings_fields('rw-theme-settings'); ?>
