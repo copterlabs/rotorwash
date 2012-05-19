@@ -68,7 +68,7 @@ function rw_add_fb_og_tags()
 {
     $opts = get_option('rw_theme_settings');
 
-    $locale     = get_locale(); // This avoids a warning in the Facebook URL linter
+    $locale     = strtolower(get_locale()); // This avoids a warning in the Facebook URL linter
     $site_name  = get_bloginfo('name'); // Loads the name of the website
 
     if( !empty($opts['fb_admins']) )
@@ -89,6 +89,9 @@ function rw_add_fb_og_tags()
         $fb_appid = NULL;
     }
 
+    // Checks for a default image set in the custom theme settings
+    $def_img   = !empty($opts['default_image']) ? $opts['default_image'] : '';
+
     if( is_single() )
     {
         global $post; // Brings the post into the function scope
@@ -100,7 +103,7 @@ function rw_add_fb_og_tags()
         }
         else
         {
-            $image = get_bloginfo('template_directory') . '/assets/images/rotorwash-default-image.jpg';
+            $image = $def_img;
         }
 
         $excerpt = !empty($post->post_excerpt) ? $post->post_excerpt : apply_filters('get_the_excerpt', $post->post_content);
@@ -116,7 +119,7 @@ function rw_add_fb_og_tags()
         // For non-blog posts (pages, home page, etc.), we display website info only
         $title       = $site_name;
         $url         = site_url();
-        $image       = get_bloginfo('template_directory') . '/assets/images/rotorwash-default-image.jpg';
+        $image       = $def_img;
         $type        = "website";
         $description = get_bloginfo('description');
     }
@@ -125,13 +128,13 @@ function rw_add_fb_og_tags()
 ?>
 
 <!-- Facebook Open Graph tags -->
-<meta property="og:title"       content="<?php echo $title; ?>" />
-<meta property="og:type"        content="<?php echo $type; ?>" />
-<meta property="og:image"       content="<?php echo $image; ?>" />
 <meta property="og:url"         content="<?php echo $url; ?>" />
+<meta property="og:type"        content="<?php echo $type; ?>" />
+<meta property="og:title"       content="<?php echo $title; ?>" />
+<meta property="og:locale"      content="<?php echo $locale; ?>" />
+<meta property="og:image"       content="<?php echo $image; ?>" />
 <meta property="og:description" content="<?php echo $description ?>" />
 <meta property="og:site_name"   content="<?php echo $site_name; ?>" />
-<meta property="og:locale"      content="<?php echo $locale; ?>" />
 <?php echo $fb_admins,$fb_appid; ?>
 
 <?php
