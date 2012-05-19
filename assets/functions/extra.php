@@ -175,7 +175,7 @@ function rw_social_links( $id="social-links", $class=NULL )
 ?>
     <li class="<?php echo $slug; ?>">
         <a href="<?php echo $slink->link_url; ?>" 
-           title="<?php echo $slink->link_name; ?>"><img src="<?php echo $link; ?>" /></a>
+           title="<?php echo $slink->link_name; ?>"><?php echo $link; ?></a>
     </li>
 <?php endforeach; ?>
 
