@@ -14,7 +14,7 @@ function rw_widgets_init() {
     // Located at the top of the sidebar.
     register_sidebar( array(
         'name' => __( 'Sidebar', 'rotorwash' ),
-        'id' => 'sidebar-widget-area',
+        'id' => 'primary-widget-area',
         'description' => __( 'The primary widget area', 'rotorwash' ),
         'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
         'after_widget' => '</li>',
