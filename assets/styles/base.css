@@ -44,6 +44,119 @@ More info: http://codex.wordpress.org/CSS
 /* Pagination */
 /* ----------------------------------------- */
 
-.pagination { padding: 0 0 20px 0; overflow: hidden; }
-.pagination .next { float: left; }
-.pagination .prev { float: right; }
+.pagination { padding: 20px 50px 0 50px; overflow: hidden; }
+.pagination .next { float: right; }
+.pagination .prev { float: left; }
+
+
+/* Base Typography for Posts */
+/* ----------------------------------------- */
+
+.post h1,
+.post h2,
+.post h3,
+.post h4,
+.post h5,
+.post h6 {
+	margin-bottom: 18px;
+}
+	
+.post h1 { font-size: 36px; }
+.post h2 { font-size: 32px; }
+.post h3 { font-size: 28px; }
+.post h4 { font-size: 24px; }
+.post h5 { font-size: 20px; }
+.post h6 { font-size: 16px; }
+
+.post p {
+	font-size: 14px;
+	margin-bottom: 18px;
+	line-height: 1.5em;
+}
+
+.post ul,
+.post ol {
+	font-size: 14px;
+	margin-bottom: 9px;
+	line-height: 1.5em;
+	margin-left: 1.5em;
+}
+
+.post ul li { list-style: disc; 	}
+.post ol li { list-style: decimal; }
+.post li { margin-bottom: 9px; 	}
+
+.post blockquote {
+	margin: 36px;
+	font-style: italic;
+	position: relative;
+}
+
+.post blockquote:before {
+	content: '“';
+	position: absolute;
+	left: -36px;
+	top: -8px;
+	font-size: 48px;
+}
+
+ul.post-meta {
+	overflow: hidden;
+	border-top: groove 2px #ddd;
+	border-bottom: groove 2px #ddd;
+	margin: 0;
+	padding: 8px 0;
+}
+
+ul.post-meta li {
+	float: left;
+	margin: 0 10px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+h2.page-title {
+	font-size: 48px;
+	margin: 36px 0 0 0;
+}
+
+#sidebar ul li h3 {
+	padding: 36px 0 4px 0;
+	border-bottom: groove 2px #ddd;
+}
+
+#sidebar ul li ul {
+	padding: 5px 0 0 0;
+	font-size: 14px;
+}
+
+#sidebar ul li ul li {
+	list-style: disc;
+	margin: 4px 0 0 1.5em;
+}
+
+
+/* 
+	LEVEL ONE
+*/
+ul#menu-main-menu                         { position: relative; }
+ul#menu-main-menu li                      { zoom: 1; }
+ul#menu-main-menu li a                    { display: block; }
+ul#menu-main-menu li:last-child a         { } /* Doesn't work in IE */
+ul#menu-main-menu li.hover,
+ul#menu-main-menu li:hover                { position: relative; }
+
+/* 
+	LEVEL TWO
+*/
+ul#menu-main-menu ul 						{ width: 220px; visibility: hidden; position: absolute; top: 100%; left: -15px; }
+ul#menu-main-menu ul li 					{ font-weight: normal; background: inherit; border-bottom: 1px solid #666; float: none; padding: 0 15px; }
+									  
+                                    		/* IE 6 & 7 Needs Inline Block */
+ul#menu-main-menu ul li a					{ border-right: none; width: 100%; display: inline-block; } 
+
+/* 
+	LEVEL THREE
+*/
+ul#menu-main-menu ul ul 					{ left: 100%; top: 0; }
+ul#menu-main-menu li:hover > ul 			{ visibility: visible; }
