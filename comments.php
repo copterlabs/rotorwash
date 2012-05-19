@@ -61,7 +61,7 @@ else: // if no comments have been posted
     if( !comments_open() ):
 
 ?>
-            <p><?php _e('Comments are closed.', 'rotorwash'); ?></p>
+            <!-- p><?php _e('Comments are closed.', 'rotorwash'); ?></p -->
 <?php
 
     endif;
