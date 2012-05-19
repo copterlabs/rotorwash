@@ -16,24 +16,17 @@
 function rw_add_fb_root(  )
 {
     $opts = get_option('rw_theme_settings');
-    if( empty($opts['fb_app_id']) )
-    {
-        trigger_error(
-                'No Facebook App ID was supplied. Add this on the "' 
-                . get_current_theme() 
-                . '" Settings page in the Dashboard.'
-            );
-    }
+    $appid = isset($opts['fb_appid']) ? '&appId=' . $opts['fb_appid'] : NULL;
 ?>
 
 <!-- Initializes Facebook ("Like" buttons and such) -->
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo $opts['fb_app_id']; ?>";
-  fjs.parentNode.insertBefore(js, fjs);
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1<?php echo $appid; ?>";
+    fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <?php
@@ -55,7 +48,7 @@ function rw_add_gplus_root(  )
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
     po.src = 'https://apis.google.com/js/plusone.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();</script>
+})();</script>
 
 <?php
 }
@@ -74,18 +67,27 @@ add_action('wp_footer', 'rw_add_gplus_root');
 function rw_add_fb_og_tags()
 {
     $opts = get_option('rw_theme_settings');
-    if( empty($opts['fb_admins']) )
+
+    $locale     = get_locale(); // This avoids a warning in the Facebook URL linter
+    $site_name  = get_bloginfo('name'); // Loads the name of the website
+
+    if( !empty($opts['fb_admins']) )
     {
-        trigger_error(
-                'No Facebook Admin IDs were supplied. Add this on the "' 
-                . get_current_theme() 
-                . '" Settings page in the Dashboard.'
-            );
+        $fb_admins = '<meta property="fb:admins"      content="'.$opts['fb_admins'].'" />' . PHP_EOL;
+    }
+    else
+    {
+        $fb_admins = NULL;
     }
 
-    $locale    = get_locale(); // This avoids a warning in the Facebook URL linter
-    $site_name = get_bloginfo('name'); // Loads the name of the website
-    $fb_admins = $opts['fb_admins']; // The Facebook ID of the site admin(s), separated by commas
+    if( !empty($opts['fb_appid']) )
+    {
+        $fb_appid = '<meta property="fb:app_id"      content="'.$opts['fb_appid'].'" />' . PHP_EOL;
+    }
+    else
+    {
+        $fb_appid = NULL;
+    }
 
     if( is_single() )
     {
@@ -130,32 +132,14 @@ function rw_add_fb_og_tags()
 <meta property="og:description" content="<?php echo $description ?>" />
 <meta property="og:site_name"   content="<?php echo $site_name; ?>" />
 <meta property="og:locale"      content="<?php echo $locale; ?>" />
-<meta property="fb:admins"      content="<?php echo $fb_admins; ?>" />
+<?php echo $fb_admins,$fb_appid; ?>
 
 <?php
 }
 add_action('wp_head', 'rw_add_fb_og_tags');
 
 /**
- * Adds the HTML5shiv script to the head
- * 
- * @return  void
- * @since   1.0.1
- */
-function rw_add_html5shiv(  )
-{
-?>
-
-<!--[if lt IE 9]>
-<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-
-<?php
-}
-add_action('wp_head', 'rw_add_html5shiv');
-
-/**
- * Enqueues scripts for the theme
+ * Enqueues scripts for the theme - dropped the shiv right in there, for older Mozilla / Safari as well.
  * 
  * @return  void
  * @since   1.0
@@ -164,10 +148,56 @@ function rw_enqueue_scripts(  )
 {
     wp_enqueue_script('jquery');
 
+    wp_enqueue_script(
+        'html5shiv',
+        'http://html5shiv.googlecode.com/svn/trunk/html5.js'
+    );
+
+    wp_enqueue_script(
+        'hoverIntent',
+        get_bloginfo('template_url') . "/assets/js/hoverIntent.js",
+        array('jquery')
+    );
+
+    wp_enqueue_script(
+        'dropdown',
+        get_bloginfo('template_url') . "/assets/js/jquery.dropdown.js",
+        array('hoverIntent')
+    );
+
     wp_register_script('twitter_widgets', 'http://platform.twitter.com/widgets.js', NULL, FALSE, TRUE);
     wp_enqueue_script('twitter_widgets');
 }
 add_action('wp_enqueue_scripts', 'rw_enqueue_scripts');
+
+/**
+ * Outputs Google Analytics tracking code if an ID is supplied
+ * 
+ * @return void
+ * @since 1.1
+ */
+function rw_add_google_analytics(  )
+{
+    $opts = get_option('rw_theme_settings');
+    if( isset($opts['ga_id']) ):
+?>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '<?php echo $opts['ga_id']; ?>']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<?php
+    endif;
+}
+add_action('wp_footer', 'rw_add_google_analytics');
 
 /**
  * Adds the theme settings button to the dashboard
@@ -195,27 +225,21 @@ add_action('admin_menu', 'rw_create_menu_item');
 function register_custom_settings() 
 {
 
-	register_setting('rw-theme-settings', 'rw_theme_settings');
+    register_setting('rw-theme-settings', 'rw_theme_settings');
 
     // Theme Settings
-	add_settings_section('rw-theme-settings', 'Theme Settings', 'rw_theme_settings_text', 'rw-theme-settings');
+    add_settings_section('rw-theme-settings', 'Theme Settings', 'rw_theme_settings_text', 'rw-theme-settings');
     add_settings_field( 'default_image', 'Default Image', 'rw_default_image', 'rw-theme-settings', 'rw-theme-settings', array('label_for'=>'default_image'));
 
     // Google Analytics
-	add_settings_section('rw-analytics-settings', 'Site Stats Settings', 'rw_ga_settings_text', 'rw-theme-settings');
+    add_settings_section('rw-analytics-settings', 'Site Stats Settings', 'rw_ga_settings_text', 'rw-theme-settings');
     add_settings_field( 'ga_id', 'Google Analytics ID', 'rw_ga_id', 'rw-theme-settings', 'rw-analytics-settings', array('label_for'=>'ga_id'));
 
     // Facebook Stuff
-	add_settings_section('rw-facebook-settings', 'Facebook Settings', 'rw_fb_settings_text', 'rw-theme-settings');
-    add_settings_field( 'fb_app_id', 'Facebook App ID', 'rw_fb_app_id', 'rw-theme-settings', 'rw-facebook-settings', array('label_for'=>'fb_app_id'));
-    add_settings_field( 'fb_admins', 'Facebook Admins', 'rw_fb_admins', 'rw-theme-settings', 'rw-facebook-settings', array('label_for'=>'fb_admins'));
-
-    // PayPal Donation Stuff
-    add_settings_section('rw-paypal-settings', 'PayPal Donation Button Settings', 'rw_paypal_settings_text', 'rw-theme-settings');
-    add_settings_field('paypal_title', 'Donation Button Title', 'rw_paypal_title', 'rw-theme-settings', 'rw-paypal-settings', array('label_for'=>'paypal_title'));
-    add_settings_field('paypal_addr', 'PayPal Email', 'rw_paypal_addr', 'rw-theme-settings', 'rw-paypal-settings', array('label_for'=>'paypal_addr'));
-    add_settings_field('paypal_item', 'PayPal Item Description', 'rw_paypal_item', 'rw-theme-settings', 'rw-paypal-settings', array('label_for'=>'paypal_item'));
-    add_settings_field('paypal_currency', 'Choose Your Currency', 'rw_paypal_currency', 'rw-theme-settings', 'rw-paypal-settings', array('label_for'=>'paypal_currency'));
+    add_settings_section('rw-facebook-settings', 'Facebook Settings', 'rw_fb_settings_text', 'rw-theme-settings');
+    add_settings_field( 'fb_page_url', 'Facebook Page URL', 'rw_fb_page_url', 'rw-theme-settings', 'rw-facebook-settings', array('label_for'=>'fb_page_url'));
+    add_settings_field( 'fb_admins', 'Facebook Admin IDs (optional)', 'rw_fb_admins', 'rw-theme-settings', 'rw-facebook-settings', array('label_for'=>'fb_admins'));
+    add_settings_field( 'fb_appid', 'Facebook Page ID (optional)', 'rw_fb_appid', 'rw-theme-settings', 'rw-facebook-settings', array('label_for'=>'fb_appid'));
 
     do_action( 'custom_settings_hook' );
 }
@@ -286,33 +310,45 @@ function rw_fb_settings_text(  )
 {
 ?>
 
-<p>Facebook settings. These are for comment administration and other good stuff.</p>
-<p><a href="https://developers.facebook.com/apps/">Register your site with Facebook to get its app ID.</a></p>
 <p>
-    To get the Facebook admin ID(s), go to 
-    <a href="https://graph.facebook.com/copterlabs">https://graph.facebook.com/copterlabs</a>
-    and replace "copterlabs" with your Facebook username(s). Multiple values must be comma-separated.
+    Facebook settings. These are for likes, likes, and more likes. We 
+    Like Likes!
+</p>
+<p>
+    Copy and paste the URL to your Facebook page here, to connect the like 
+    button at the bottom of your site to the page on Facebook you want 
+    to promote.
+</p>
+<p>
+    If you want access to Facebook Insights for this site, you'll need to add 
+    account ID(s) for yourself and/or your admins. Use the 
+    <a href="https://developers.facebook.com/tools/explorer">Graph API
+    Explorer</a> to figure out your account ID. If you want to assign more than 
+    one admin, separate the IDs with commas (i.e. 1234567,8901234).
+</p>
+<p>
+    To give access to a Facebook page instead, use the Page ID field instead.
 </p>
 
 <?php
 }
 
 /**
- * Adds the App ID text field
+ * Adds the Facebook Page ID field
  * 
  * @return  void
- * @since   1.0.2
+ * @since   1.0.3
  */
-function rw_fb_app_id(  )
+function rw_fb_page_url(  )
 {
     rw_text_field(__FUNCTION__);
 }
 
 /**
- * Adds the Facebook admins text field
+ * Adds the Facebook Page ID field
  * 
  * @return  void
- * @since   1.0.2
+ * @since   1.0.3
  */
 function rw_fb_admins(  )
 {
@@ -320,100 +356,12 @@ function rw_fb_admins(  )
 }
 
 /**
- * Adds the top text to the PayPal settings section
+ * Adds the Facebook Page ID field
  * 
  * @return  void
  * @since   1.0.3
  */
-function rw_paypal_settings_text(  )
-{
-?>
-
-<p>These settings are required if you plan to place a donation button on the site.</p>
-<p>The PayPal Email is where donations will be sent. This should be tied to a valid PayPal account.</p>
-<p>The post ID from which the donation was made is used as the item number for the sake of tracking.</p>
-<p>Supply a title for the form to tell the reader <em>why</em> they should donate (i.e. <em>Buy Me a Cup of Coffee</em>)</p>
-<p>The item description shows up on the PayPal checkout page.</p>
-
-<?php
-}
-
-/**
- * Adds the PayPal email address to the settings
- * 
- * @return  void
- * @since   1.0.3
- */
-function rw_paypal_addr(  )
-{
-    rw_text_field(__FUNCTION__);
-}
-
-/**
- * Adds the item code to the settings
- * 
- * @return  void
- * @since   1.0.3
- */
-function rw_paypal_item(  )
-{
-    rw_text_field(__FUNCTION__);
-}
-
-/**
- * Adds the currency type to the settings
- * 
- * @return  void
- * @since   1.0.3
- */
-function rw_paypal_currency(  )
-{
-    $opts = get_option('rw_theme_settings');
-    $paypal_currency = isset($opts['paypal_currency']) ? $opts['paypal_currency'] : '';
-
-    $supported_currencies = array(
-            'USD' => '$',
-            'AUD' => '$',
-            'BRL' => 'R$',
-            'GBP' => '£',
-            'CZK' => '',
-            'DKK' => '',
-            'EUR' => '€',
-            'HKD' => '$',
-            'HUF' => '',
-            'ILS' => '₪',
-            'JPY' => '¥',
-            'MXN' => '$',
-            'TWD' => 'NT$',
-            'NZD' => '$',
-            'NOK' => '',
-            'PHP' => 'P',
-            'PLN' => '',
-            'SGD' => '$',
-            'SEK' => '',
-            'CHF' => '',
-            'THB' => '฿',
-        );
-
-?>
-    <select id="paypal_currency" name="rw_theme_settings[paypal_currency]">
-<?php foreach( $supported_currencies as $cur=>$sym ): ?>
-        <option value="<?php echo $cur; ?>" 
-                title="<?php echo $sym; ?>"<?php echo $cur===$paypal_currency ? ' selected="selected"' : ''; ?>><?php echo $cur; ?></option>
-<?php endforeach; ?>
-    </select>
-
-<?php
-
-}
-
-/**
- * Adds the text to the settings area
- * 
- * @return  void
- * @since   1.0.3
- */
-function rw_paypal_title(  )
+function rw_fb_appid(  )
 {
     rw_text_field(__FUNCTION__);
 }
@@ -439,6 +387,27 @@ function rw_text_field( $func )
 
 <?php
 }
+
+
+/**
+ * Creates a text field for the Theme settings page
+ * 
+ * @return  void
+ * @since   1.0.1
+ */
+function rw_textarea( $func )
+{
+    $field = str_replace('rw_', '', $func);
+    $opts = get_option('rw_theme_settings');
+    $value = isset($opts[$field]) ? $opts[$field] : '';
+?>
+
+<textarea id="<?php echo $field; ?>" rows="5" cols="60" name="rw_theme_settings[<?php echo $field; ?>]"><?php echo $value; ?></textarea>
+
+<?php
+}
+
+
 
 /**
  * Loads the custom theme settings area
