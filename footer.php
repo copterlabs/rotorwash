@@ -8,8 +8,8 @@
  */
 
     $opts = get_option('rw_theme_settings');
-    if( !empty($opts['fb_page_id']) ) {
-    	$data_href = $opts['fb_page_id'];
+    if( !empty($opts['fb_page_url']) ) {
+    	$data_href = $opts['fb_page_url'];
     } else {
     	$data_href = get_site_url();
     }
