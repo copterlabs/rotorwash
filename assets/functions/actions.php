@@ -422,3 +422,78 @@ function rw_settings_page(  )
 {
     require_once TEMPLATEPATH . '/assets/includes/rotorwash-settings.php';
 }
+
+
+function rw_admin_enqueue_scripts(  )
+{
+    wp_enqueue_style('rotorwash_admin_styles');
+}
+add_action('admin_enqueue_scripts', 'rw_admin_enqueue_scripts');
+
+/**
+ * Register custom styles for the admin dashboard widget
+ *
+ * @return void
+ * @since 1.1
+ */
+function rw_admin_init(  )
+{
+    wp_register_style('rotorwash_admin_styles', get_template_directory_uri() . '/assets/styles/admin.css');
+}
+add_action('admin_init', 'rw_admin_init');
+
+/**
+ * Removes unnecessary dashboard home widgets
+ * 
+ * @return  void
+ * @since   1.1
+ */
+function rw_update_dashboard_widgets(  )
+{
+    global $wp_meta_boxes;
+
+    $widget_title = 'Helpful Links for Your New Site by Copter Labs';
+    wp_add_dashboard_widget('rotorwash_dashboard', $widget_title, 'rw_add_dashboard_widget');
+
+    remove_meta_box('dashboard_incoming_links', 'dashboard', 'normal');
+    remove_meta_box('dashboard_right_now', 'dashboard', 'normal');
+    remove_meta_box('dashboard_plugins', 'dashboard', 'normal');
+    remove_meta_box('dashboard_recent_drafts', 'dashboard', 'normal');
+    remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
+    remove_meta_box('dashboard_primary', 'dashboard', 'side');
+    remove_meta_box('dashboard_secondary', 'dashboard', 'side');
+}
+add_action('wp_dashboard_setup', 'rw_update_dashboard_widgets' );
+
+function rw_add_dashboard_widget(  )
+{
+?>
+<p>
+    This site was built by 
+    <a href="http://www.copterlabs.com/" target="_blank">Copter Labs</a>. Here 
+    are some links and contact info that you may find helpful.
+</p>
+<h4>Support</h4>
+<ul>
+    <li>Email: <a href="mailto:info@copterlabs.com">info@copterlabs.com</a></li>
+    <li>Phone: <a href="callto:+15033950165">+1 503-395-0165</a></li>
+</ul>
+<h4>Connect with Copter Labs</h4>
+<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fcopterlabs&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35&amp;appId=121970801204701" 
+        scrolling="no" frameborder="0" 
+        style="border:none; overflow:hidden; width:450px; height:35px;" 
+        allowTransparency="true"></iframe>
+<p>
+    You can find Copter Labs on 
+    <a href="http://twitter.com/copterlabs" target="_blank">Twitter</a> and 
+    <a href="http://facebook.com/copterlabs" target="_blank">Facebook</a>.
+</p>
+<h4>Referral Bonus</h4>
+<p>
+    Don't forget that <strong>Copter Labs pays $100 for each client you refer 
+    to us.</strong> It's our way of saying thanks for spreading the word about 
+    Copter Labs! If you have questions about how it works, just 
+    <a href="mailto:ali.porter@copterlabs.com">ask Ali</a>.
+</p>
+<?php
+}
