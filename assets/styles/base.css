@@ -69,14 +69,14 @@ More info: http://codex.wordpress.org/CSS
 .post h6 { font-size: 16px; }
 
 .post p {
-	font-size: 14px;
+	font-size: 18px;
 	margin-bottom: 18px;
 	line-height: 1.5em;
 }
 
 .post ul,
 .post ol {
-	font-size: 14px;
+	font-size: 18px;
 	margin-bottom: 9px;
 	line-height: 1.5em;
 	margin-left: 1.5em;
@@ -127,7 +127,7 @@ h2.page-title {
 
 #sidebar ul li ul {
 	padding: 5px 0 0 0;
-	font-size: 14px;
+	font-size: 18px;
 }
 
 #sidebar ul li ul li {
