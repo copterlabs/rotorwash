@@ -17,7 +17,7 @@
     <title><?php wp_title(); ?></title>
     <link rel="profile" href="http://gmpg.org/xfn/11" />
     <link rel="stylesheet" type="text/css" media="all" 
-          href="<?php bloginfo( 'stylesheet_url' ); echo '?' . filemtime( get_stylesheet_directory() . '/style.css'); ?>" />
+          href="<?php bloginfo('stylesheet_url'); echo '?' . filemtime(get_stylesheet_directory() . '/style.css'); ?>" />
     <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 <?php
     // not using disqus? uncomment the following

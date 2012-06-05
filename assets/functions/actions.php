@@ -210,7 +210,7 @@ add_action('wp_footer', 'rw_add_google_analytics');
  */
 function rw_create_menu_item(  )
 {
-    $page_title =  'Settings for ' . wp_get_theme();
+    $page_title = 'Settings for ' . wp_get_theme();
     $btn_text = wp_get_theme() . ' Settings';
     $btn_icon = get_bloginfo('template_directory') . '/assets/images/copter-wp-admin-icon.png';
     add_menu_page($page_title, $btn_text, 'administrator', __FILE__, 'rw_settings_page', $btn_icon);
