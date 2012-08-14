@@ -4,8 +4,8 @@ RotorWash
 A stripped down WordPress theme with some extra functionality added 
 in for funsies.
 
-Documentation
--------------
+Documentation 
+--------------
 
 There is currently no documentation. Everyone should yell at [Jason](https://github.com/jlengstorf)
 until he posts it.
