@@ -182,7 +182,7 @@ add_action('wp_enqueue_scripts', 'rw_enqueue_scripts');
 function rw_add_google_analytics(  )
 {
     $opts = get_option('rw_theme_settings');
-    if( isset($opts['ga_id']) ):
+    if( isset($opts['ga_id']) && !empty($opts['ga_id']) ):
 ?>
 <script type="text/javascript">
 
