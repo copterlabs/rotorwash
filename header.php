@@ -46,5 +46,5 @@
 
     </header>
 
-    <section id="content">
+    <section id="rw-content-wrapper">
 
