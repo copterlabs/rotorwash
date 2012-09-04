@@ -4,10 +4,38 @@ if( !function_exists('rw_add_custom_post_types') ):
 /**
  * Register custom post type function.
  *
+ * Allows for significantly less code when creating custom post types. The 
+ * options are all present, but since most of them don't change, they're not 
+ * required. For available arguments, see the documentation at 
+ * {@link http://codex.wordpress.org/Function_Reference/register_post_type}.
+ *
+ * This function must be hooked to 'after_setup_theme' or the child theme will 
+ * be overwritten by RotorWash. Don't forget to call this function in 
+ * actions.php or functions.php -- actions.php on the theme setup function is 
+ * recommended for consistency.
+ *
+ * Example:
+ *
+    $custom_post_types = array(
+        array(
+            'singular'      => 'Custom Post Type',
+            'plural'        => 'Custom Post Types',
+            'menu_position' => 6, // Lower number means higher placement
+            'supports'      => array('title'),
+        ),
+        array(
+            'singular'      => 'Other New Post Type',
+            'plural'        => 'Other New Post Types',
+            'menu_position' => 7,
+            'supports'      => array('title', 'excerpt'),
+        ),
+    );
+ *
  *
  * @return void
  * @since RotorWash 1.0
- * @uses register_sidebar
+ * @uses register_post_type
+ * @see http://codex.wordpress.org/Function_Reference/register_post_type
  */
 
 function rw_add_custom_post_types($custom_post_types) {
