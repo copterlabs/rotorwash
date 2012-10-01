@@ -41,7 +41,7 @@ if( $gp ):
 
 ?>
     <!-- Google +1 -->
-    <div class="g-plusone" data-size="medium" data-href="<?php the_permalink(); ?>"></div>
+    <div class="g-plusone" data-size="medium" data-href="<?php echo $permalink; ?>"></div>
 
 <?php
 
@@ -50,9 +50,9 @@ if( $fb ):
 
 ?>
     <!-- Facebook Like Button -->
-    <iframe src="http://www.facebook.com/plugins/like.php?href=<?php echo urlencode(get_permalink()); ?>&amp;layout=button_count&amp;show_faces=true&amp;width=80&amp;action=like&amp;colorscheme=light&amp;height=21"
+    <iframe src="http://www.facebook.com/plugins/like.php?href=<?php echo urlencode($permalink); ?>&amp;layout=button_count&amp;show_faces=true&amp;width=100&amp;action=like&amp;colorscheme=light&amp;height=21"
             scrolling="no" frameborder="0"
-            style="border:none; overflow:hidden; width:80px; height:21px;"
+            style="border:none; overflow:hidden; width:100px; height:21px;"
             allowTransparency="true" class="facebook">
     </iframe>
 
