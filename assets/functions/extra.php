@@ -139,7 +139,7 @@ function rw_posted_in( $show_tags=TRUE )
 }
 endif;
 
-if( !function_exists('rw_get_social_links') ):
+if( !function_exists('rw_social_links') ):
 /**
  * Outputs a list of social media links.
  * 
