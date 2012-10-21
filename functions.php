@@ -38,6 +38,9 @@
  * @since RotorWash 1.0
  */
 
+// Creates a CONSTANT easy to grab Child Theme URL
+define('CHILD_TEMPLATE_URL', dirname( get_bloginfo('stylesheet_url')) );
+
 if( !function_exists( 'rw_setup' ) ):
 /**
  * Sets up theme defaults and registers support for various WordPress features.
@@ -58,9 +61,6 @@ if( !function_exists( 'rw_setup' ) ):
  */
 function rw_setup(  )
 {
-    // Creates a CONSTANT easy to grab Child Theme URL
-    define('CHILD_TEMPLATE_URL', dirname( get_bloginfo('stylesheet_url')) );
-
     // This theme styles the visual editor with editor-style.css to match the theme style.
     add_editor_style();
 
