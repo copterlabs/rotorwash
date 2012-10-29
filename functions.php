@@ -94,6 +94,9 @@ add_action( 'after_setup_theme', 'rw_setup' );
 // Widgets
 require_once TEMPLATEPATH . '/assets/functions/widgets.php';
 
+require_once TEMPLATEPATH . '/assets/functions/updater.php';
+
+
 // Custom post types
 require_once TEMPLATEPATH . '/assets/functions/custom-post-types.php';
 
