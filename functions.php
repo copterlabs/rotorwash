@@ -39,9 +39,9 @@
  */
 
 // Creates a CONSTANT easy to grab Child Theme URL
-define('CHILD_TEMPLATE_URL', dirname( get_bloginfo('stylesheet_url')) );
+define('CHILD_TEMPLATE_URL', get_stylesheet_directory_uri());
 
-if( !function_exists( 'rw_setup' ) ):
+if (!function_exists('rw_setup')):
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
