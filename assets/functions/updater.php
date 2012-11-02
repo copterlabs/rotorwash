@@ -337,11 +337,19 @@ function transient_update_themes_filter($data){
 		remove_action( "after_theme_row_" . $theme['Stylesheet'], 'wp_theme_update_row');
 		add_action( "after_theme_row_" . $theme['Stylesheet'], 'github_theme_update_row', 11, 2 );
 		
+		$u = parse_url( $theme['Github Theme URI']);
+		$p = explode("/", $u['path'] );
+		$matches = array(
+			"username"=>$p[1],
+			"repo"=>$p[2]
+		);
+/*
 		// Grab Github Tags
 		preg_match(
 			'/http(s)?:\/\/github.com\/(?<username>[\w-]+)\/(?<repo>[\w-]+)$/',
 			$theme['Github Theme URI'],
 			$matches);
+*/
 		if(!isset($matches['username']) or !isset($matches['repo'])){
 			$data->response[$theme_key]['error'] = 'Incorrect github project url.  Format should be (no trailing slash): <code style="background:#FFFBE4;">https://github.com/&lt;username&gt;/&lt;repo&gt;</code>';
 			continue;
