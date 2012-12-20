@@ -94,8 +94,9 @@ add_action( 'after_setup_theme', 'rw_setup' );
 // Widgets
 require_once TEMPLATEPATH . '/assets/functions/widgets.php';
 
-require_once TEMPLATEPATH . '/assets/functions/updater.php';
-
+if(!empty($_GET['action']) && ($_GET['action'] == 'do-core-reinstall' || $_GET['action'] == 'do-core-upgrade')); else {
+	require_once TEMPLATEPATH . '/assets/functions/updater.php';
+}
 
 // Custom post types
 require_once TEMPLATEPATH . '/assets/functions/custom-post-types.php';
