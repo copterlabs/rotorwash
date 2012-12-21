@@ -40,6 +40,24 @@ More info: http://codex.wordpress.org/CSS
     margin:10px; 
 }
 
+/*
+Base Image alignment - like the above but ya know more specific in case ;) 
+*/
+img.alignleft {
+    float: left;
+    margin: 0 20px 20px 0;
+}
+
+img.alignright {
+    float: right;
+    margin: 0 0 20px 20px;
+}
+
+img.aligncenter {
+    float: none;
+    margin: 0 auto 20px;
+}
+
 
 /* Pagination */
 /* ----------------------------------------- */
