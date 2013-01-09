@@ -66,6 +66,11 @@ add_action('wp_footer', 'rw_add_gplus_root');
  */
 function rw_add_fb_og_tags()
 {
+    // Bails if Yoast SEO is installed to avoid duplicate OG tags
+    if (is_plugin_active('wordpress-seo/wp-seo.php')) {
+        return FALSE;
+    }
+
     $opts = get_option('rw_theme_settings');
 
     $locale     = strtolower(get_locale()); // This avoids a warning in the Facebook URL linter
