@@ -54,6 +54,10 @@ function rw_filter_wp_title( $title, $separator="&rsaquo;" )
         return $title;
     }
 
+    // Move the separator to after the generated title rather than before
+    $title = str_replace("$separator ", "", $title);
+    $title .= " $separator ";
+
     // Otherwise, let's start by adding the site name to the end:
     $title .= get_bloginfo( 'name', 'display' );
 
