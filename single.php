@@ -12,12 +12,6 @@ get_header();
 if( have_posts() ):
     while( have_posts() ):
         the_post();
-
-        echo "<div class='pagination'>";
-        next_post_link('<div class="next">%link</div>', '%title ' . _x('&rarr;', 'Next post link', 'rotorwash'));
-        previous_post_link('<div class="prev">%link</div>', _x('&larr;', 'Previous post link', 'rotorwash') . ' %title');
-        echo "</div>";
-
 ?>
 
             <article class="post">
