@@ -159,7 +159,7 @@ function rw_enqueue_scripts(  )
 
     wp_enqueue_script(
         'html5shiv',
-        'http://html5shiv.googlecode.com/svn/trunk/html5.js'
+        '//html5shiv.googlecode.com/svn/trunk/html5.js'
     );
 
     wp_enqueue_script(
@@ -174,7 +174,7 @@ function rw_enqueue_scripts(  )
         array('hoverIntent')
     );
 
-    wp_register_script('twitter_widgets', 'http://platform.twitter.com/widgets.js', NULL, FALSE, TRUE);
+    wp_register_script('twitter_widgets', '//platform.twitter.com/widgets.js', NULL, FALSE, TRUE);
     wp_enqueue_script('twitter_widgets');
 }
 add_action('wp_enqueue_scripts', 'rw_enqueue_scripts');
