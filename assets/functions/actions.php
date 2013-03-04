@@ -68,7 +68,10 @@ function rw_add_fb_og_tags()
 {
     // Bails if Yoast SEO is installed to avoid duplicate OG tags
     include_once ABSPATH . 'wp-admin/includes/plugin.php';
-    if (is_plugin_active('wordpress-seo/wp-seo.php')) {
+    if (
+        is_plugin_active('wordpress-seo/wp-seo.php') 
+        || is_plugin_active('facebook/facebook.php')
+    ) {
         return FALSE;
     }
 
