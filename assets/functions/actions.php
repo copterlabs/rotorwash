@@ -166,19 +166,12 @@ function rw_enqueue_scripts(  )
     );
 
     wp_enqueue_script(
-        'hoverIntent',
-        get_bloginfo('template_url') . "/assets/js/hoverIntent.js",
-        array('jquery')
+        'twitter_widgets', 
+        '//platform.twitter.com/widgets.js', 
+        NULL, 
+        FALSE, 
+        TRUE
     );
-
-    wp_enqueue_script(
-        'dropdown',
-        get_bloginfo('template_url') . "/assets/js/jquery.dropdown.js",
-        array('hoverIntent')
-    );
-
-    wp_register_script('twitter_widgets', '//platform.twitter.com/widgets.js', NULL, FALSE, TRUE);
-    wp_enqueue_script('twitter_widgets');
 }
 add_action('wp_enqueue_scripts', 'rw_enqueue_scripts');
 
