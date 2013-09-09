@@ -1,19 +1,18 @@
 <div class="wrap">
+<div id="icon-options-general" class="icon32"><br></div>
+<h2><?php echo $page_title; ?></h2>
 
-<h2>Settings for <?php echo wp_get_theme(); ?></h2>
-
-<?php if( isset($_GET['settings-updated']) && $_GET['settings-updated']==='true' ): ?>
-<div id="message" class="updated below-h2"><p>Settings updated.</p></div>
-<?php endif; ?>
-
-<form method="post" action="options.php">
+<form method="post" action="options.php" class="rotorwash-admin-form">
 <?php
     settings_fields('rw-theme-settings');
-    do_settings_sections('rw-theme-settings');
+    do_settings_sections($custom_settings);
 ?>
 
     <p class="submit">
-        <input type="submit" class="button-primary" 
+        <input type="submit" 
+               id="rotorwash-settings-submit" 
+               class="button-primary" 
+               name="rw_theme_settings[submit]"
                value="<?php _e('Save Changes', 'rotorwash') ?>" />
     </p>
 
