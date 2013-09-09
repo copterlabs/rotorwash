@@ -49,8 +49,8 @@ if (!function_exists('rw_setup')):
  * before the init hook. The init hook is too late for some features, such as indicating
  * support post thumbnails.
  *
- * To override rw_setup() in a child theme, add your own rw_setup to your child theme's
- * functions.php file.
+ * To override rw_setup() in a child theme, add your own rw_setup to your 
+ * child theme's functions.php file.
  *
  * @uses add_theme_support() To add support for post thumbnails and automatic feed links.
  * @uses register_nav_menus() To add support for navigation menus.
@@ -67,25 +67,53 @@ function rw_setup(  )
     // This theme uses post thumbnails
     add_theme_support( 'post-thumbnails' );
 
-    // Add default posts and comments RSS feed links to head
-    add_theme_support( 'automatic-feed-links' );
-
-    // Make theme available for translation
-    // Translations can be filed in the /languages/ directory
-    load_theme_textdomain( 'rotorwash', TEMPLATEPATH . '/languages' );
-
-    $locale = get_locale();
-    $locale_file = TEMPLATEPATH . "/languages/$locale.php";
-    if( is_readable( $locale_file ) )
-        require_once( $locale_file );
+    // Removes the WLW manifest and RSD links
+    remove_action('wp_head', 'wlwmanifest_link');
+    remove_action('wp_head', 'rsd_link');
 
     // This theme uses wp_nav_menu() in one location.
-    register_nav_menus( array(
-        'primary' => __( 'Primary Navigation', 'copterlabs' ),
-    ) );
+    register_nav_menus(array(
+        'primary' => 'Main Navigation',
+        'footer'  => 'Footer Navigation',
+    ));
+
+    // Retrieves options to determine which CPT to grab
+    $opts = get_option('rw_theme_settings');
+
+    // Custom post type party!
+    $custom_post_types = array();
+
+    if (isset($opts['has_products']) && $opts['has_products']==='yes') {
+        $custom_post_types[] = array(
+            'singular'      => 'Product',
+            'plural'        => 'Products',
+            'menu_position' => 6, // Lower number means higher placement
+            'supports'      => array('title'),
+        );
+    }
+
+    if (isset($opts['has_services']) && $opts['has_services']==='yes') {
+        $custom_post_types[] = array(
+            'singular'      => 'Service',
+            'plural'        => 'Services',
+            'menu_position' => 7, // Lower number means higher placement
+            'supports'      => array('title'),
+        );
+    }
+
+    if (isset($opts['has_testimonials']) && $opts['has_testimonials']==='yes') {
+        $custom_post_types[] = array(
+            'singular'      => 'Testimonial',
+            'plural'        => 'Testimonials',
+            'menu_position' => 8, // Lower number means higher placement
+            'supports'      => array('title'),
+        );
+    }
+    
+    rw_add_custom_post_types($custom_post_types);
 }
 endif;
-add_action( 'after_setup_theme', 'rw_setup' );
+add_action('after_setup_theme', 'rw_setup');
 
 /* In an attempt to make this code easier to read, the major chunks have been broken into
  * smaller files with code pertaining only that functionality
@@ -93,10 +121,6 @@ add_action( 'after_setup_theme', 'rw_setup' );
 
 // Widgets
 require_once TEMPLATEPATH . '/assets/functions/widgets.php';
-
-if(!empty($_GET['action']) && ($_GET['action'] == 'do-core-reinstall' || $_GET['action'] == 'do-core-upgrade')); else {
-	require_once TEMPLATEPATH . '/assets/functions/updater.php';
-}
 
 // Custom post types
 require_once TEMPLATEPATH . '/assets/functions/custom-post-types.php';
@@ -109,3 +133,8 @@ require_once TEMPLATEPATH . '/assets/functions/actions.php';
 
 // Extra functions and miscellaneous theme code
 require_once TEMPLATEPATH . '/assets/functions/extra.php';
+
+// Admin stuff
+require_once TEMPLATEPATH . '/assets/functions/admin.php';
+
+$role = new RW_Role;
