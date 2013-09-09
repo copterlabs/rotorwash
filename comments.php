@@ -34,18 +34,16 @@ if( have_comments() ):
 
 <?php
 
-    if( get_comment_pages_count()>1 && get_option('page_comments') )
-    {
-        previous_comments_link(__('&larr; Older Comments', 'rotorwash'));
-        next_comments_link(__('Newer Comments &rarr;', 'rotorwash'));
+    if (get_comment_pages_count()>1 && get_option('page_comments')) {
+        previous_comments_link('&larr; Older Comments');
+        next_comments_link('Newer Comments &rarr;');
     }
 
 ?>
 
-            <ol>
+            <ol id="post-comments">
                 <?php
-                    // See rw_comment() in rotorwash/functions.php for more.
-                    wp_list_comments(array('callback' => 'rw_comment'));
+                    wp_list_comments();
                 ?>
             </ol>
 
@@ -56,15 +54,6 @@ if( have_comments() ):
         next_comments_link(__('Newer Comments &rarr;', 'rotorwash'));
     endif;
 
-else: // if no comments have been posted
-
-    if( !comments_open() ):
-
-?>
-            <!-- p><?php _e('Comments are closed.', 'rotorwash'); ?></p -->
-<?php
-
-    endif;
 endif;
 
 comment_form();
