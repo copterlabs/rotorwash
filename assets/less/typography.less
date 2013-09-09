@@ -1,0 +1,24 @@
+/**
+ * Site-wide typography
+ */
+
+/* Fonts */
+@headline: 'gotham-black';
+@bodycopy: 'gotham';
+
+/* Default styles */
+.headline() {
+    font-family: @headline;
+    font-weight: normal;
+    font-style: normal;
+    letter-spacing: 2px;
+    color: @dark;
+}
+
+.bodycopy() {
+    font-family: @bodycopy;
+    font-weight: normal;
+    font-style: normal;
+    letter-spacing: 0;
+    color: lighten(@dark, 10%);
+}

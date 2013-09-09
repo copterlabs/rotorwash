@@ -1,0 +1,184 @@
+/*! RotorWash v2.0 — A simple theme for fitness professionals by Copter Labs */
+
+/*
+ * VARIABLES
+ *****************************************************************************/
+
+/* Measurement */
+@baseline: 20px;
+@fontsize: 15px;
+
+/* Color */
+@dark:  #111;
+@light: #ddd;
+
+
+/*
+ * DEPENDENCIES
+ *****************************************************************************/
+
+@import url(normalize.less);
+@import url(wp-classes.less);
+@import url(typography.less);
+
+
+/*
+ * BASIC LAYOUT
+ *****************************************************************************/
+
+body {
+    max-width: 1140px;
+    margin: 0 auto;
+
+    .bodycopy();
+    font-size: @fontsize;
+    line-height: @baseline;
+}
+
+section#main-content {
+    padding: @baseline 0;
+}
+
+article,aside {
+    display: inline-block;
+    vertical-align: top;
+}
+
+article { width: 65%; }
+aside   { width: 30%; }
+
+
+/*
+ * HEADER
+ *****************************************************************************/
+
+header {
+    height: @baseline*12;
+    background-image: url(http://placekitten.com/1140/240);
+
+    a {
+        display: block;
+
+        img {
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+    }
+}
+
+nav {
+    background: @dark;
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+
+        li {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+
+            a {
+                display: block;
+                padding: @baseline*.5 @baseline;
+
+                .headline();
+                color: @light;
+                font-size: @baseline;
+                line-height: @baseline;
+                text-transform: uppercase;
+                text-decoration: none;
+
+                &:hover {
+                    background-color: @light;
+                    color: @dark;
+                }
+            }
+        }
+    }
+}
+
+
+/*
+ * COMMENTS
+ *****************************************************************************/
+
+
+
+/*
+ * BASE COMMENT STYLES
+ */
+
+#post-comments {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    &>li {
+        list-style: none;
+        margin: @baseline*1.5 0;
+
+        ul.children {
+            list-style: none;
+            margin: @baseline*.5 0 0 @baseline;
+
+            &>li {
+                list-style: none;
+                margin: @baseline 0;
+                padding: @baseline*.5 @baseline;
+                border-left: 1px dotted lighten(@dark, 20%);
+            }
+        }
+    }
+
+    .comment-body {
+        .comment-author,.comment-meta {
+            overflow: hidden;
+            float: left;
+            height: 32px;
+            margin: 0 0 .25em;
+            padding: 0 0 .25em;
+            font-size: .75em;
+            line-height: 1.33em;
+
+            &>* {
+                vertical-align: middle;
+            }
+
+            &>a,&>cite,&>span {
+                display: inline-block;
+                margin: .625em 0 0 1em;
+                text-transform: uppercase;
+            }
+        }
+
+        .comment-author>cite,.comment-author>span,&>p {
+            clear: left;
+            margin: 0 0 .5em;
+
+            &.says { display: none; }
+        }
+    }
+
+    &>li.bypostauthor,ul.children>li.bypostauthor {
+        background: darken(@light, 20%);
+        border-left: @baseline*.5 solid lighten(@dark, 20%);
+    }
+}
+
+#commentform {
+    label,input,textarea {
+        display: block;
+    }
+
+    label {
+        font-size: .75em;
+        line-height: 1.33em;
+        text-transform: uppercase;
+    }
+
+    .form-allowed-tags { display: none; }
+}
