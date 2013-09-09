@@ -1,13 +1,12 @@
 /*
 Theme Name: RotorWash
 Theme URI: https://github.com/copterlabs/rotorwash
-Description: Stripped down HTML5 theme with a number of utility functions
-Version: 1.0.8
+Description: A simple theme for fitness professionals.
+Version: 2.0.0
 Github Theme URI: https://github.com/copterlabs/rotorwash
 Author: Copter Labs
 Author URI: http://www.copterlabs.com
 Tags: blank, stripped, html5, extended, copter
 */
 
-@import "assets/styles/base.css";
-@import "assets/styles/layout.css";
+/* Edit theme styles in ./assets/less/main.less */
