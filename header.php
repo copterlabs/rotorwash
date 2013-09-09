@@ -8,43 +8,71 @@
  * @subpackage RotorWash
  * @since RotorWash 1.0
  */
+
+// Stores the location of assets
+$assets_dir = get_stylesheet_directory_uri() . '/assets';
+
+// Loads theme-specific settings
+$opts = get_option('rw_theme_settings');
+
+// Grabs the theme logo if one is set
+$logo_src = !isset($opts['default_image']) ? 'http://placekitten.com/200/200' : $opts['default_image'];
+
+// Builds a tagline
+$site_tag = get_bloginfo('name') . '&mdash;' . get_bloginfo('description');
+
+// Determines the page or post slug
+$slug = NULL;
+$post_obj = $wp_query->get_queried_object();
+if (is_object($post_obj)) {
+    // Get the post slug
+    if (property_exists($post_obj, 'post_name')) {
+        $slug = $post_obj->post_name;
+    }
+
+    // Checks for blog posts
+    if (
+        (property_exists($post_obj, 'post_type')
+        && $post_obj->post_type==='post')
+        || is_category() 
+        || is_author()
+    ) {
+        $slug = 'blog';
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
 
-    <meta charset="<?php bloginfo('charset'); ?>" />
-    <title><?php wp_title(); ?></title>
-    <link rel="profile" href="http://gmpg.org/xfn/11" />
-    <link rel="stylesheet" type="text/css" media="all" 
-          href="<?php bloginfo('stylesheet_url'); echo '?' . filemtime(get_stylesheet_directory() . '/style.css'); ?>" />
-    <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
-<?php
-    // not using disqus? uncomment the following
-    /*
-    	if ( is_singular() && get_option( 'thread_comments' ) )
-    		wp_enqueue_script( 'comment-reply' );
-    */
+<meta charset="<?php bloginfo('charset'); ?>" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    wp_head();
-?>
+<title><?php wp_title('&raquo;', TRUE, 'right'); ?></title>
+
+<?php wp_head(); ?>
+
+<!-- For < IE9 support of HTML5 elements -->
+<!--[if lt IE 9]>
+  <script src="<?php echo $assets_dir; ?>/js/html5shiv.js"></script>
+<![endif]-->
+
 </head>
 
-<body <?php body_class(); ?>>
+<body>
 
-    <header>
+<header>
+    <a href="<?=home_url('/')?>" 
+       title="<?=$site_tag?>" 
+       rel="home">
+        <img src="<?=$logo_src?>" 
+             alt="<?bloginfo('name', 'display')?>" />
+    </a>
+</header>
 
-        <h1>
-            <a href="<?php echo home_url( '/' ); ?>" 
-               title="<?php echo esc_attr(get_bloginfo('name', 'display')), ' &mdash; ', esc_attr(get_bloginfo( 'description' )); ?>" 
-               rel="home"><?php bloginfo( 'name' ); ?></a>
-        </h1>
+<nav id="access" role="navigation">
+    <?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
+</nav>
 
-        <nav id="access" role="navigation">
-            <?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
-        </nav>
-
-    </header>
-
-    <section id="rw-content-wrapper">
-
+<section id="main-content" class="<?=$slug?>">
