@@ -15,7 +15,7 @@
     }
 ?>
 
-    </section>
+    </section><!--/#main-content-->
 
     <footer id="site-credits">
         All content copyright &copy; 
