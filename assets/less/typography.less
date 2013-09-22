@@ -6,19 +6,11 @@
 @headline: 'gotham-black';
 @bodycopy: 'gotham';
 
-/* Default styles */
-.headline() {
-    font-family: @headline;
-    font-weight: normal;
-    font-style: normal;
-    letter-spacing: 2px;
-    color: @dark;
+/* Some overrides of Bootstrap styles for better readability */
+h2,h3,h4,h5,h6 {
+    margin-top: @baseLineHeight;
 }
 
-.bodycopy() {
-    font-family: @bodycopy;
-    font-weight: normal;
-    font-style: normal;
-    letter-spacing: 0;
-    color: lighten(@dark, 10%);
+p {
+    margin-bottom: @baseLineHeight*.75;
 }

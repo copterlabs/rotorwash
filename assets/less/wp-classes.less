@@ -2,28 +2,45 @@
  * Default classes used by WordPress.
  */
 
-.aligncenter { display:block; margin: 0 auto 20px; }
-.alignleft   { float:left;    margin: 0 20px 20px 0;    }
-.alignright  { float:right;   margin: 0 0 20px 20px;    }
 .wp-caption  {
-    border:1px solid #666; 
-    text-align:center; 
-    background:#ccc; 
-    padding:10px; 
-    margin:10px; 
+    padding: @baseline*.5;
+    border: 1px solid darken(@light, 15%);
+    background: darken(@light, 5%);
+    text-align:center;
+    .border-radius(@baseline*.125);
+
+    .wp-caption-text {
+        font-size: @fontsize*.85;
+        margin: @baseline*.5 0 0;
+        font-style: italic;
+        color: @gray;
+    }
 }
 
-img.alignleft {
-    float: left;
-    margin: 0 20px 20px 0;
+.alignleft,img.alignleft {
+    .floatleft();
 }
 
-img.alignright {
-    float: right;
-    margin: 0 0 20px 20px;
+.alignright,img.alignright {
+    .floatright();
 }
 
-img.aligncenter {
+.aligncenter,img.aligncenter {
+    .aligncenter();
+}
+
+.aligncenter(@margin: @baseline) {
+    display: block;
     float: none;
-    margin: 0 auto 20px;
+    margin: 0 auto @margin;
+}
+
+.floatright(@margin: @baseline) {
+    float: right;
+    margin: 0 @margin @margin 0;
+}
+
+.floatleft(@margin: @baseline) {
+    float: left;
+    margin: 0 0 @margin @margin;
 }

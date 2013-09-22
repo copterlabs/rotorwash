@@ -17,7 +17,8 @@
  * DEPENDENCIES
  *****************************************************************************/
 
-@import url(normalize.less);
+@import url(../lib/bootstrap/less/bootstrap.less);
+@import url(../lib/bootstrap/less/responsive.less);
 @import url(wp-classes.less);
 @import url(typography.less);
 
@@ -30,7 +31,7 @@ body {
     max-width: 1140px;
     margin: 0 auto;
 
-    .bodycopy();
+    /*.bodycopy();*/
     font-size: @fontsize;
     line-height: @baseline;
 }
@@ -44,8 +45,7 @@ article,aside {
     vertical-align: top;
 }
 
-article { width: 65%; }
-aside   { width: 30%; }
+
 
 
 /*
@@ -85,7 +85,7 @@ nav {
                 display: block;
                 padding: @baseline*.5 @baseline;
 
-                .headline();
+                /*.headline();*/
                 color: @light;
                 font-size: @baseline;
                 line-height: @baseline;
