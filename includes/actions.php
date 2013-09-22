@@ -8,55 +8,6 @@
  */
 
 /**
- * Adds Facebook root to the footer of the site.
- * 
- * @return  void
- * @since   1.0.2
- * @deprecated 2.0.0
- */
-function rw_add_fb_root(  )
-{
-    $opts = get_option('rw_theme_settings');
-    $appid = isset($opts['fb_appid']) ? '&appId=' . $opts['fb_appid'] : NULL;
-?>
-
-<!-- Initializes Facebook ("Like" buttons and such) -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1<?php echo $appid; ?>";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-<?php
-}
-// add_action('wp_footer', 'rw_add_fb_root');
-
-/**
- * Adds Google +1 button to the footer of the site
- * 
- * @return  void
- * @since   1.0.5
- * @deprecated 2.0.0
- */
-function rw_add_gplus_root(  )
-{
-?>
-
-<!-- Initializes Google +1 Buttons -->
-<script>(function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-})();</script>
-
-<?php
-}
-// add_action('wp_footer', 'rw_add_gplus_root');
-
-/**
  * Adds Facebook Open Graph tags to the website using the wp_head action.
  *
  * Depending on what type of post/page we're displaying, different information will
@@ -66,9 +17,8 @@ function rw_add_gplus_root(  )
  * @since   1.0.2
  * @return  void
  */
-function rw_add_fb_og_tags(  )
-{
-    // Bails if Yoast SEO is installed to avoid duplicate OG tags
+function rw_add_fb_og_tags(  ) {
+    // Bails if Yoast SEO / Facebook is installed to avoid duplicate OG tags
     include_once ABSPATH . 'wp-admin/includes/plugin.php';
     if (
         is_plugin_active('wordpress-seo/wp-seo.php') 
@@ -154,7 +104,7 @@ function rw_add_fb_og_tags(  )
 add_action('wp_head', 'rw_add_fb_og_tags');
 
 /**
- * Enqueues scripts for the theme - dropped the shiv right in there, for older Mozilla / Safari as well.
+ * Enqueues scripts and stylesheets for the theme
  * 
  * @return  void
  * @since   1.0
