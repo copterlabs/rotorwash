@@ -62,7 +62,7 @@ if (is_object($post_obj)) {
 
 <body>
 
-<header>
+<header class="row-fluid">
     <a href="<?=home_url('/')?>" 
        title="<?=$site_tag?>" 
        rel="home">
@@ -71,8 +71,8 @@ if (is_object($post_obj)) {
     </a>
 </header>
 
-<nav id="access" role="navigation">
+<nav id="access" role="navigation" class="row-fluid">
     <?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
 </nav>
 
-<section id="main-content" class="<?=$slug?>">
+<section id="main-content" class="<?=$slug?> row-fluid">

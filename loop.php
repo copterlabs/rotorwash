@@ -53,7 +53,7 @@ while( have_posts() ):
 
 ?>
 
-        <article class="post">
+        <article class="post span7">
 
             <h2>
                 <a href="<?php the_permalink(); ?>" 

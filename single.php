@@ -14,8 +14,8 @@ if( have_posts() ):
         the_post();
 ?>
 
-            <article class="post">
-                <h2><?php the_title(); ?></h2>
+            <article class="post span7">
+                <h1><?php the_title(); ?></h1>
 
 <?php 
 

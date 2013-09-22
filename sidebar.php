@@ -8,7 +8,7 @@
  */
 ?>
 
-<aside id="sidebar">
+<aside id="sidebar" class="span4 offset1">
     <ul>
 <?php if( !dynamic_sidebar('primary-widget-area') ): ?>
         <li>
