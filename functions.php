@@ -120,21 +120,21 @@ add_action('after_setup_theme', 'rw_setup');
  */
 
 // Widgets
-require_once TEMPLATEPATH . '/assets/functions/widgets.php';
+require_once TEMPLATEPATH . '/includes/widgets.php';
 
 // Custom post types
-require_once TEMPLATEPATH . '/assets/functions/custom-post-types.php';
+require_once TEMPLATEPATH . '/includes/custom-post-types.php';
 
 // Filters
-require_once TEMPLATEPATH . '/assets/functions/filters.php';
+require_once TEMPLATEPATH . '/includes/filters.php';
 
 // Actions
-require_once TEMPLATEPATH . '/assets/functions/actions.php';
+require_once TEMPLATEPATH . '/includes/actions.php';
 
 // Extra functions and miscellaneous theme code
-require_once TEMPLATEPATH . '/assets/functions/extra.php';
+require_once TEMPLATEPATH . '/includes/extra.php';
 
 // Admin stuff
-require_once TEMPLATEPATH . '/assets/functions/admin.php';
+require_once TEMPLATEPATH . '/includes/admin.php';
 
 $role = new RW_Role;
